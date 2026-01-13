@@ -1,0 +1,9 @@
+.DS_Store
+.coreml-build/
+.coreml-tmp/
+.upstream/
+.venv/
+__pycache__/
+
+# artifact lives on Hugging Face (do not commit large zips)
+coreml/*.zip
