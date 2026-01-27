@@ -31,7 +31,7 @@ CoreML artifact for **SenseVoiceSmall**.
 ```bash
 uvx hf download mefengl/SenseVoiceSmall-coreml --local-dir . \
   --include "coreml/SenseVoiceSmall.mlmodelc.zip" \
-  --include "manifest.json" \
+  --include "config.json" \
   --include "checksums.sha256"
 ```
 

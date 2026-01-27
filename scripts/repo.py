@@ -3,11 +3,11 @@
 
 Two things only:
 - validate: ensure manifest/checksums/artifact are self-consistent.
-- pin: update manifest.json upstream pins + asset checksums.
+- pin: update config.json upstream pins + asset checksums.
 
 Usage:
   uv run scripts/repo.py validate --root .
-  uv run scripts/repo.py pin --manifest manifest.json --model FunAudioLLM/SenseVoiceSmall --model-revision <sha> \
+  uv run scripts/repo.py pin --manifest config.json --model FunAudioLLM/SenseVoiceSmall --model-revision <sha> \
     --asset-url cmvn_am.mvn=<url> --asset-url spm=<url> [--sensevoice-repo ./.upstream/SenseVoice]
 """
 
@@ -56,11 +56,11 @@ def _git_head(repo: Path) -> str | None:
 
 
 def validate(root: Path) -> None:
-    manifest_path = root / "manifest.json"
+    manifest_path = root / "config.json"
     checksums_path = root / "checksums.sha256"
 
     if not manifest_path.exists():
-        raise SystemExit("Missing manifest.json")
+        raise SystemExit("Missing config.json")
     if not checksums_path.exists():
         raise SystemExit("Missing checksums.sha256")
 
@@ -68,7 +68,7 @@ def validate(root: Path) -> None:
 
     zip_rel = (m.get("artifacts", {}) or {}).get("coreml_zip")
     if not zip_rel:
-        raise SystemExit("manifest.json missing artifacts.coreml_zip")
+        raise SystemExit("config.json missing artifacts.coreml_zip")
 
     zip_path = root / zip_rel
     if not zip_path.exists():

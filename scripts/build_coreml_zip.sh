@@ -62,7 +62,7 @@ echo "Zipping: $OUT (deterministic)"
 find "$MLMODELC" -exec touch -t 198001010000 {} +
 (cd "$(dirname "$MLMODELC")" && /usr/bin/zip -q -X -r "$OUT" "$(basename "$MLMODELC")")
 
-echo "Updating checksums.sha256 + manifest.json"
+echo "Updating checksums.sha256 + config.json"
 python3 - "$OUT" <<'PY'
 import hashlib, json, subprocess, sys
 from pathlib import Path
@@ -71,7 +71,7 @@ root = Path.cwd()
 out_arg = Path(sys.argv[1])
 out = out_arg if out_arg.is_absolute() else (root / out_arg)
 out = out.resolve()
-manifest = root / "manifest.json"
+manifest = root / "config.json"
 checksums = root / "checksums.sha256"
 
 def sha256(path: Path) -> str:

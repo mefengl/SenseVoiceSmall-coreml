@@ -28,7 +28,7 @@ pin:
 	@HF_SHA=$$(uvx hf models info "FunAudioLLM/SenseVoiceSmall" --expand sha | python3 -c 'import sys,json;print(json.load(sys.stdin)["sha"])'); \
 	CMVN_URL='https://modelscope.cn/api/v1/models/iic/SenseVoiceSmall/repo?Revision=master&FilePath=am.mvn'; \
 	SPM_URL='https://modelscope.cn/api/v1/models/iic/SenseVoiceSmall/repo?Revision=master&FilePath=chn_jpn_yue_eng_ko_spectok.bpe.model'; \
-	ARGS="pin --manifest manifest.json --model FunAudioLLM/SenseVoiceSmall --model-revision $$HF_SHA --asset-url cmvn_am.mvn=$$CMVN_URL --asset-url spm=$$SPM_URL"; \
+	ARGS="pin --manifest config.json --model FunAudioLLM/SenseVoiceSmall --model-revision $$HF_SHA --asset-url cmvn_am.mvn=$$CMVN_URL --asset-url spm=$$SPM_URL"; \
 	if [ -d "$(SENSEVOICE_REPO)" ]; then ARGS="$$ARGS --sensevoice-repo $(SENSEVOICE_REPO)"; fi; \
 	uv run scripts/repo.py $$ARGS
 
@@ -46,6 +46,6 @@ compare:
 
 upload:
 	uvx hf upload "$(HF_REPO)" "$(ZIP)" "$(ZIP)"
-	uvx hf upload "$(HF_REPO)" manifest.json manifest.json
+	uvx hf upload "$(HF_REPO)" config.json config.json
 	uvx hf upload "$(HF_REPO)" checksums.sha256 checksums.sha256
 	uvx hf upload "$(HF_REPO)" README.md README.md
